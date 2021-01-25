@@ -1,9 +1,9 @@
 class ArticlesController < ApplicationController
+  before_action :set_author
   before_action :set_article, only: %i[ show edit update destroy ]
-
   # GET /articles or /articles.json
   def index
-    @articles = Article.all
+    @articles = Article.where(tenant_id: @author.id)
   end
 
   # GET /articles/1 or /articles/1.json
@@ -57,13 +57,18 @@ class ArticlesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_article
-      @article = Article.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def article_params
-      params.require(:article).permit(:title, :content)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_article
+    @article = Article.for_author(@author).find(params[:id])
+  end
+
+  def set_author
+    @author = Author.find_by!(slug: request.subdomain)
+  end
+
+  # Only allow a list of trusted parameters through.
+  def article_params
+    params.require(:article).permit(:title, :content, :tenant_id)
+  end
 end
