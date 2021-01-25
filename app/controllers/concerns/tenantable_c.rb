@@ -1,4 +1,4 @@
-module Tenantable
+module TenantableC
   extend ActiveSupport::Concern
 
   private

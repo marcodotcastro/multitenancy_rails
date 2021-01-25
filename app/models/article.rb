@@ -1,3 +1,3 @@
 class Article < ApplicationRecord
-  include Tenantable
+  include TenantableM
 end

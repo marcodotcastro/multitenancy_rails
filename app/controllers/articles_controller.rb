@@ -1,12 +1,10 @@
 class ArticlesController < ApplicationController
-  include Tenantable
-
+  include TenantableC
+  before_action :set_author
   before_action :set_article, only: %i[ show edit update destroy ]
   # GET /articles or /articles.json
   def index
-    read_with_tenant do
-      @articles = Article.where(tenant_id: @author.id)
-    end
+    @articles = Article.for_author(@author)
   end
 
   # GET /articles/1 or /articles/1.json
@@ -64,6 +62,10 @@ class ArticlesController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_article
     @article = Article.for_author(@author).find(params[:id])
+  end
+
+  def set_author
+    @author = Author.find_by!(slug: request.subdomain)
   end
 
   # Only allow a list of trusted parameters through.
