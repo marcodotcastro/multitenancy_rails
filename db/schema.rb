@@ -10,13 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_25_183422) do
+ActiveRecord::Schema.define(version: 2021_01_25_183132) do
 
-  create_table "active_storage_variant_records", force: :cascade do |t|
-    t.bigint "blob_id", null: false
-    t.string "variation_digest", null: false
-    t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
-  end
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
@@ -34,5 +31,4 @@ ActiveRecord::Schema.define(version: 2021_01_25_183422) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
 end
