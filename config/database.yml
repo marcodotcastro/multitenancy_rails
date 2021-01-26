@@ -15,14 +15,8 @@ default: &default
   port: 5433
 
 development:
-  primary:
-    <<: *default
-    database: multitenancy_rails_development
-
-  primary_marco:
-    <<: *default
-    database: multitenancy_rails_marco_development
-
+  <<: *default
+  database: multitenancy_rails_development
 test:
   <<: *default
   database: multitenancy_rails_test

@@ -1,4 +1,4 @@
-module TenantableM
+module Tenantable
   extend ActiveSupport::Concern
 
   included do
